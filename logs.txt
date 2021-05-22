@@ -1,8 +1,0 @@
-
-==================================STARTING==================================
-2021-05-22 14:01:03
-exception catched and handled
-Traceback (most recent call last):
-  File "/home/pi/twitterbot/apollonano_tweets_script.py", line 38, in <module>
-    replies_from_tweet.writ0_last_tweet_id_to_file(last_tweet_id.group(1))
-AttributeError: 'module' object has no attribute 'writ0_last_tweet_id_to_file'
