@@ -23,19 +23,20 @@ def write_last_tweet_id_to_file(last_tweet_id):
     my_last_tweet = {"user":{"screen_name": "OSIFOY_"},"id": int(last_tweet_id)}
     with open(str(filename), 'w') as json_file:
         json.dump(my_last_tweet, json_file)
-    print('write_last_tweet_id_to_file() wrote last_tweet_id (' + str(last_tweet_id) + ') to the file')
+    #print('write_last_tweet_id_to_file() wrote last_tweet_id (' + str(last_tweet_id) + ') to the file')
 
 def get_last_tweet_id_from_file():
     for line in open(str(filename)):
         x = json.loads(line)
-        print('get_last_tweet_id_from_file() read from the file: ' + str(x['id']))
+        #print('get_last_tweet_id_from_file() read from the file: ' + str(x['id']))
         return x['id']
 
-def get_tweets():
+def get_my_last_tweet():
+    #print('get_my_last_tweet()')
     for line in open(str(filename)):
-        aux = twitter.Status.NewFromJsonDict(json.loads(line))
-        print('get_tweets() returned: ' + str(aux))
-        yield aux
+        my_last_tweet = twitter.Status.NewFromJsonDict(json.loads(line))
+        #print('get_my_last_tweet() returned: ' + str(my_last_tweet))
+        yield my_last_tweet
 
 def get_replies(tweet):
     user = tweet.user.screen_name
@@ -59,10 +60,21 @@ def get_replies(tweet):
         if len(replies) != 100:
             break
 
+def get_last_tweet_time_difference():
+    #print('get_last_tweet_time_difference()')
+    for tweet in get_my_last_tweet():
+        twjdata = t.GetStatus(tweet.id)
+    created_at_time_str = datetime.strftime(datetime.strptime(twjdata.created_at,'%a %b %d %H:%M:%S +0000 %Y'), '%Y-%m-%d %H:%M:%S')
+    current_time_str = str(datetime.now()).split(".", 1)[0]
+    created_at_time_datetime = datetime.strptime(created_at_time_str, '%Y-%m-%d %H:%M:%S') + timedelta(hours=1)
+    current_time_datetime = datetime.strptime(current_time_str, '%Y-%m-%d %H:%M:%S') 
+    return ((current_time_datetime-created_at_time_datetime).total_seconds())
+
+
 def get_last_tweet_reply_time_difference():
-    print('get_last_tweet_reply_time_difference()')
+    #print('get_last_tweet_reply_time_difference()')
     count = 0
-    for tweet in get_tweets():
+    for tweet in get_my_last_tweet():
         #print(tweet)
         for reply in get_replies(tweet):
             count += 1
