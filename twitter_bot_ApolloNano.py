@@ -21,7 +21,7 @@ def post_tweet(test):
 
 	if test == 0:
 		status_string = 'Currently it is ' + time + ', I am replying to the TWEET_ID_TO_REPLY  ' + TWEET_ID_TO_REPLY + ' and I am claiming a free tip of nano. \n@ApolloNano \n!faucet nano_3s17ozbgtgdm6zjk4gkat5ffxhnxzoguu9hfp1dbpyih69e7nfs94gr3rqoo'
-		print('tweet posted as reply to: ' + TWEET_ID_TO_REPLY)
+		#print('tweet posted as reply to: ' + TWEET_ID_TO_REPLY)
 		#Using our newly created object, utilize the update_status to send in the text passed in through CMD
 		return api.update_status(status = status_string, in_reply_to_status_id = TWEET_ID_TO_REPLY)
 	
