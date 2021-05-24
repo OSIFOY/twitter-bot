@@ -35,5 +35,7 @@ except:
 
 tweet = twitter_bot_ApolloNano.post_tweet(test)
 last_tweet_id = re.search("u'id': (.*)L, u'favorite_count':", str(tweet))
-replies_from_tweet.write_last_tweet_id_to_file(last_tweet_id.group(1))
+last_tweet_id_to_write = last_tweet_id.group(1)
+print('tweet posted: ' + last_tweet_id_to_write)
+replies_from_tweet.write_last_tweet_id_to_file(last_tweet_id_to_write)
 print('==================================FINISHED==================================\n')
